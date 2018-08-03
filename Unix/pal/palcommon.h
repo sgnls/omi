@@ -188,12 +188,7 @@
 **==============================================================================
 */
 
-#if defined(CONFIG_ENABLE_WCHAR)
-typedef wchar_t PAL_Char;
-#else
 typedef char PAL_Char;
-#endif
-
 typedef PAL_Char TChar;
 
 /*
@@ -204,12 +199,7 @@ typedef PAL_Char TChar;
 **==============================================================================
 */
 
-#if defined(CONFIG_ENABLE_WCHAR)
-# define __PAL_T(STR) L ## STR
-# define PAL_T(STR) __PAL_T(STR)
-#else
 # define PAL_T(STR) STR
-#endif
 
 /*
 **==============================================================================
@@ -775,12 +765,7 @@ PAL_END_EXTERNC
 # define PAL_Free SystemFree
 # define PAL_Strdup SystemStrdup
 # define PAL_Wcsdup SystemWcsdup
-
-# if defined(CONFIG_ENABLE_WCHAR)
-#  define PAL_Tcsdup SystemWcsdup
-# else
 #  define PAL_Tcsdup SystemStrdup
-# endif
 
 #endif /* !defined(USE_ALLOCATOR) */
 

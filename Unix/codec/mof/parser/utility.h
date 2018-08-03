@@ -174,9 +174,5 @@ int mof_converttoUTF16LE(_Inout_ MOF_State * state, _Inout_ MOF_StringLen *r);
 **
 **==============================================================================
 */
-#if defined(CONFIG_ENABLE_WCHAR)
-# define Zfprintf fwprintf
-#else
 # define Zfprintf fprintf
-#endif
 #endif

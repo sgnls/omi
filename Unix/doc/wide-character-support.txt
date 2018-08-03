@@ -5,7 +5,6 @@ To build OMI to support wide characters, configure like this:
 This enables the use of wide characters in the code and defines the following 
 macros:
 
-    CONFIG_ENABLE_WCHAR
     MI_CHAR_TYPE==2
 
 Depending on how these macros are defined, one of the following type definitions

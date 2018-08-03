@@ -42,7 +42,6 @@
 **         sizeof(TChar) == sizeof(char)
 **         sizeof(TChar) == sizeof(wchar_t)
 **
-**     If the latter is true, then CONFIG_ENABLE_WCHAR is defined.
 **
 **==============================================================================
 */
@@ -94,11 +93,7 @@ PAL_INLINE int Tcscmp(
     _In_z_ const TChar* s1, 
     _In_z_ const TChar* s2)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcscmp(s1, s2);
-#else
     return Strcmp(s1, s2);
-#endif
 }
 
 /*
@@ -153,11 +148,7 @@ PAL_INLINE int Tcsncmp(
     _In_z_ const TChar* s2, 
     size_t n)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcsncmp(s1, s2, n);
-#else
     return Strncmp(s1, s2, n);
-#endif
 }
 
 /*
@@ -205,11 +196,7 @@ _Post_satisfies_(return == _String_length_(str))
 PAL_INLINE size_t Tcslen(
     _In_z_ const TChar* str)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcslen(str);
-#else
     return Strlen(str);
-#endif
 }
 
 /*
@@ -241,11 +228,7 @@ PAL_INLINE int Tcscasecmp(
     _In_z_ const TChar* s1, 
     _In_z_ const TChar* s2)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcscasecmp(s1, s2);
-#else
     return Strcasecmp(s1, s2);
-#endif
 }
 
 /*
@@ -301,11 +284,7 @@ PAL_INLINE int Tcsncasecmp(
     _In_z_ const TChar* s2, 
     size_t n)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcsncasecmp(s1, s2, n);
-#else
     return Strncasecmp(s1, s2, n);
-#endif
 }
 
 /*
@@ -339,11 +318,7 @@ PAL_INLINE unsigned long Tcstoul(
     _Out_opt_ _Deref_post_z_ TChar** end, 
     int base)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcstoul(str, end, base);
-#else
     return Strtoul(str, end, base);
-#endif
 }
 
 /*
@@ -377,11 +352,7 @@ PAL_INLINE long Tcstol(
     _Out_opt_ _Deref_post_z_ TChar** end, 
     int base)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcstol(str, end, base);
-#else
     return Strtol(str, end, base);
-#endif
 }
 
 /*
@@ -402,27 +373,12 @@ PAL_INLINE PAL_Uint64 Strtoull(
     return strtoull(str, end, base);
 }
 
-#if defined(CONFIG_ENABLE_WCHAR)
-PAL_INLINE PAL_Uint64 Wcstoull(
-    _In_z_ const wchar_t* str, 
-    _Out_opt_ _Deref_post_z_ wchar_t** end, 
-    int base)
-{
-    extern unsigned long long wcstoull(const wchar_t* s, wchar_t** e, int b);
-    return wcstoull(str, end, base);
-}
-#endif
-
 PAL_INLINE PAL_Uint64 Tcstoull(
     _In_z_ const TChar* str, 
     _Out_opt_ _Deref_post_z_ TChar** end, 
     int base)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcstoull(str, end, base);
-#else
     return Strtoull(str, end, base);
-#endif
 }
 
 /*
@@ -457,11 +413,7 @@ PAL_INLINE PAL_Sint64 Tcstoll(
     _Out_opt_ _Deref_post_z_ TChar** end, 
     int base)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcstoll(str, end, base);
-#else
     return Strtoll(str, end, base);
-#endif
 }
 
 /*
@@ -492,11 +444,7 @@ PAL_INLINE double Tcstod(
     _In_z_ const TChar* str, 
     _Out_opt_ _Deref_post_z_ TChar** end)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcstod(str, end);
-#else
     return Strtod(str, end);
-#endif
 }
 
 /*
@@ -527,11 +475,7 @@ PAL_INLINE TChar* Tcschr(
     _In_z_ const TChar* str, 
     TChar ch)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return (wchar_t*)Wcschr(str, ch);
-#else
     return (char*)Strchr(str, ch);
-#endif
 }
 
 /*
@@ -562,11 +506,7 @@ PAL_INLINE TChar* Tcsstr(
     _In_z_ const TChar* haystack, 
     _In_z_ const TChar* needle)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return (wchar_t*)Wcsstr(haystack, needle);
-#else
     return (char*)Strstr(haystack, needle);
-#endif
 }
 
 /*
@@ -649,11 +589,7 @@ PAL_INLINE TChar* Tcsrchr(
     _In_z_ const TChar* str, 
     TChar ch)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcsrchr(str, ch);
-#else
     return Strrchr(str, ch);
-#endif
 }
 
 /*
@@ -687,11 +623,7 @@ PAL_INLINE TChar* Tcscat(
     size_t count, 
     _In_z_ const TChar* src)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcscat(dest, count, src);
-#else
     return Strcat(dest, count, src);
-#endif
 }
 
 /*
@@ -725,11 +657,7 @@ PAL_INLINE TChar* Tcstok(
     _In_z_ const TChar* delim, 
     _Inout_ _Deref_prepost_opt_z_ TChar** ctx)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcstok(str, delim, ctx);
-#else
     return Strtok(str, delim, ctx);
-#endif
 }
 
 /*
@@ -758,11 +686,7 @@ PAL_INLINE size_t Tcslcat(
     _In_z_ const TChar* src, 
     size_t size)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcslcat(dest, src, size);
-#else
     return Strlcat(dest, src, size);
-#endif
 }
 
 /* Converts single-characters to TChar while concatenating.
@@ -803,11 +727,7 @@ PAL_INLINE size_t Tcslcpy(
     _In_z_ const TChar* src, 
     size_t size)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return Wcslcpy(dest, src, size);
-#else
     return Strlcpy(dest, src, size);
-#endif
 }
 
 /* Warning: this function truncates wide-characters to single-characters.
@@ -872,7 +792,6 @@ _Success_(return != NULL) _Ret_notnull_ _Ret_z_
 _Post_readable_size_(*size)
 _Null_terminated_ const char* Uint32ToStr(_Pre_writable_size_(11) char buf[11], PAL_Uint32 x, size_t* size);
 
-#if !defined(CONFIG_ENABLE_WCHAR)
 _Success_(return != NULL) _Ret_notnull_ _Ret_z_
 _Post_readable_size_(*size)
 PAL_INLINE const TChar* Uint32ToZStr(_Pre_writable_size_(11) TChar buf[11], PAL_Uint32 x, size_t* size)
@@ -885,28 +804,6 @@ PAL_INLINE void Uint64ToZStr(_Pre_writable_size_(21) TChar buf[21], PAL_Uint64 v
 {
     Uint64ToStr(buf, value, result, size);
 }
-
-#else
-_Success_(return != NULL) _Ret_notnull_ _Ret_z_
-_Post_readable_size_(*size)
-const TChar* Uint32ToZStr(_Pre_writable_size_(11) TChar buf[11], PAL_Uint32 x, size_t* size);
-
-_Post_satisfies_(*size == _String_length_(*result))
-void Uint64ToZStr(_Pre_writable_size_(21) TChar buf[21], PAL_Uint64 value, _Outptr_result_z_ const TChar **result,  _Out_opt_ size_t* size);
-#endif
-
-#if defined(CONFIG_ENABLE_WCHAR)
-
-typedef wchar_t Utf32Char;
-typedef char Utf8Char;
-
-int ConvertWideCharToMultiByte(
-            const Utf32Char* utf32,
-            size_t utf32Size,
-            size_t* firstNonAscii,
-            Utf8Char* utf8,
-            int utf8Size);
-#endif
 
 PAL_INLINE char *
 int64_to_a(char *buf, int buflen, long long value, int *psize )

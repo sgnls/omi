@@ -523,12 +523,8 @@ void Run::DumpPipe()
     if(globalPipeOutputType == InfoMessage)
     {
         char buf[Globals::PipeSize];
-#ifdef CONFIG_ENABLE_WCHAR
-        int convertCount = wcstombs(buf, globalPipe, Globals::PipeSize);
-#else
         int convertCount = Strlen(globalPipe);
         Strlcpy(buf, globalPipe, convertCount + 1);
-#endif
         buf[convertCount] = PAL_T('\0');
 
         s_log << buf;

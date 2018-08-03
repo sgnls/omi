@@ -866,15 +866,6 @@ NITS_EXPORT ptrdiff_t NITS_PRESENCE;
 
 #define NitsEndTrapValue };
 
-#if defined(CONFIG_ENABLE_WCHAR)
-#define NitsTraceEx             NitsTraceExW
-#define NitsAssertEx            NitsAssertExW
-#define NitsCompareEx           NitsCompareExW
-#define NitsCompareStringEx     NitsCompareStringExW
-#define NitsCompareSubstringEx  NitsCompareSubstringExW
-#define NitsGetString           NitsGetStringW
-#define NitsSetString           NitsSetStringW
-#else /* !CONFIG_ENABLE_WCHAR */
 #define NitsTraceEx             NitsTraceExA
 #define NitsAssertEx            NitsAssertExA
 #define NitsCompareEx           NitsCompareExA
@@ -882,7 +873,6 @@ NITS_EXPORT ptrdiff_t NITS_PRESENCE;
 #define NitsCompareSubstringEx  NitsCompareSubstringExA
 #define NitsGetString           NitsGetStringA
 #define NitsSetString           NitsSetStringW
-#endif /* !CONFIG_ENABLE_WCHAR */
 
 #define NitsIgnoringError() \
     NitsAssert(!NitsDidFault(), PAL_T("Ignoring error deliberately"));

@@ -33,19 +33,6 @@
  #pragma prefast(pop)
 #endif
 
-#if defined(CONFIG_ENABLE_WCHAR)
-# define Tprintf Wprintf
-# define Ftprintf Fwprintf
-# define Stprintf Swprintf
-# define Stprintf_CultureInvariant Swprintf_CultureInvariant
-# define Stscanf_CultureInvariant Swscanf_CultureInvariant
-# define Vtprintf Vwprintf
-# define Vftprintf Vfwprintf
-# define Vstprintf Vswprintf
-# define Vstprintf_CultureInvariant Vswprintf_CultureInvariant
-# define Vstscanf_CultureInvariant Vswscanf_CultureInvariant
-# define Tputc fwputc
-#else
 # define Tprintf Printf
 # define Ftprintf Fprintf
 # define Stprintf Snprintf
@@ -57,7 +44,6 @@
 # define Vstprintf_CultureInvariant Vsnprintf_CultureInvariant
 # define Vstscanf_CultureInvariant Vsscanf_CultureInvariant
 # define Tputc fputc
-#endif
 
 PAL_BEGIN_EXTERNC
 

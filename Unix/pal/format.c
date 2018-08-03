@@ -270,11 +270,7 @@ wchar_t* WFixupFormat(
         if (fmt[0] == '%' && fmt[1] == 'T')
         {
             *p++ = '%';
-#if defined(CONFIG_ENABLE_WCHAR)
-            *p++ = 'S';
-#else
             *p++ = 's';
-#endif
             fmt += 2;
         }
         else
@@ -580,46 +576,6 @@ PAL_Char* Vstprintf_StrDup(_In_z_ const PAL_Char* templateString, va_list ap)
     int err;
     va_list tmpAp;
 
-#if defined(CONFIG_ENABLE_WCHAR)
-    /* on Linux, if stackBuffer is too small, then
-       1. snprintf returns the number of required characters
-       2. swnprintf returns -1 (arrgh!)
-       for #2 we need to loop to find the required size...
-     */
-    resultCharCount = 16;
-    do
-    {
-        PAL_Char* tmp = (PAL_Char*)PAL_Realloc(
-            resultString, sizeof(PAL_Char) * resultCharCount);
-
-        if (!tmp)
-        {
-            PAL_Free(resultString);
-            resultString = NULL;
-            goto CleanUp;
-        }
-        resultString = tmp;
-
-        PAL_va_copy(tmpAp, ap);
-        err = Vstprintf(resultString, resultCharCount, templateString, tmpAp);
-        va_end(tmpAp);
-        if (err < 0)
-        {
-            if (resultCharCount < ( ((size_t)-1) / (2*sizeof(PAL_Char)) ))
-            {
-                resultCharCount *= 2;
-                continue;
-            }
-            else
-            {
-                PAL_Free(resultString);
-                resultString = NULL;
-                goto CleanUp;
-            }
-        }
-    }
-    while (err < 0);
-#else /* !defined(CONFIG_ENABLE_WCHAR) */
     PAL_va_copy(tmpAp, ap);
     resultCharCount = Vstprintf(NULL, 0, templateString, tmpAp);
     va_end(tmpAp);
@@ -648,7 +604,7 @@ PAL_Char* Vstprintf_StrDup(_In_z_ const PAL_Char* templateString, va_list ap)
             goto CleanUp;
         }
     }
-#endif /* ?defined(CONFIG_ENABLE_WCHAR) */
+
 CleanUp:
     return resultString;
 }

@@ -1846,9 +1846,6 @@ void XML_Raise(
     const Char* format,
     ...)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-# error "implement this!"
-#else
     int n;
     va_list ap;
     memset(&ap, 0, sizeof(ap));
@@ -1859,7 +1856,6 @@ void XML_Raise(
     va_start(ap, format);
     n = XML_vsnprintf(self->message, sizeof(self->message), format, ap);
     va_end(ap);
-#endif
 }
 
 void XML_FormatError(

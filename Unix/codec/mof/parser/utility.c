@@ -23,10 +23,6 @@
 #pragma prefast (pop)
 #endif /* _PREFAST_ */
 
-#if defined(CONFIG_ENABLE_WCHAR)
-#include <wctype.h>
-#endif
-
 #define UTIL_Szprintf Stprintf
 #define UTIL_Vszprintf Vstprintf
 
@@ -309,12 +305,7 @@ MI_Boolean mof_isdigit(MOF_Encoding e, void * data)
 =============================================================================*/
 MI_Boolean mof_isspace(MOF_Encoding e, void * data)
 {
-    /* todo: switch to char(s) comparison */
-#if defined(CONFIG_ENABLE_WCHAR)
-    return iswspace(mof_getchar(e, data)) != 0;
-#else
     return isspace(mof_getchar(e, data)) != 0;
-#endif
 }
 
 /*=============================================================================
@@ -324,11 +315,7 @@ MI_Boolean mof_isspace(MOF_Encoding e, void * data)
 =============================================================================*/
 MI_Boolean mof_isalpha(MOF_Encoding e, void * data)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return iswalpha(mof_getchar(e, data)) != 0;
-#else
     return isalpha(mof_getchar(e, data)) != 0;
-#endif
 }
 
 /*=============================================================================
@@ -338,11 +325,7 @@ MI_Boolean mof_isalpha(MOF_Encoding e, void * data)
 =============================================================================*/
 MI_Boolean mof_isalnum(MOF_Encoding e, void * data)
 {
-#if defined(CONFIG_ENABLE_WCHAR)
-    return iswalnum(mof_getchar(e, data)) != 0;
-#else
     return isalnum(mof_getchar(e, data)) != 0;
-#endif
 }
 
 /*=============================================================================
@@ -597,26 +580,7 @@ MI_Result mof_setupbuffer(void * data, size_t nBytes, Batch *batch, MOF_Buffer *
             break;
         }
     }
-#if defined(CONFIG_ENABLE_WCHAR)
-    if ( b->e.t == ANSI )
-    {
-	// Convert to UTF32 and allocate memory
-        size_t xCount = 0;
-	char *tempBuf = (char *) ((char*)data + b->e.o);
-	nBytes = nBytes * 4;
-	p = (unsigned char*) Batch_Get(batch, nBytes);
-	if (p == NULL) return MI_RESULT_SERVER_LIMITS_EXCEEDED;
 
-	for (; xCount < (nBytes/4); xCount ++)
-	{
-	    ((wchar_t*)p)[xCount] = tempBuf[xCount];
-	}
-	b->e.u = MI_TRUE;
-	b->e.o = 0;
-	b->e.t = UNI;
-    }
-#endif
-#if !defined(CONFIG_ENABLE_WCHAR)
     /* wchar_t in unix is 4 bytes. Buffer may be coming from windows with proper encoding of UTF-16 ( 2 bytes).
             Once we determine the encoding we appropriately convert it to ASCII on linux. We can't handle 
             characters in unix that doesn't fall under 0<=x<=255. We reject the requests in those cases.*/
@@ -651,7 +615,7 @@ MI_Result mof_setupbuffer(void * data, size_t nBytes, Batch *batch, MOF_Buffer *
         b->e.o = 0;
         b->e.t = ANSI;
     }
-#endif
+
     if(b->e.u && (ptrdiff_t)(p) % (sizeof(wchar_t)) != 0)
     {
         /* Buffer is not alighed with sizeof(wchar_t) */
