@@ -1904,12 +1904,6 @@ else
     echo "/* #define CONFIG_HAVE_SCHED_GETCPU */" >> $fn
 fi
 
-if [ "$have_wcsdup" = "1" ]; then
-    echo "#define CONFIG_HAVE_WCSDUP" >> $fn
-else
-    echo "/* #define CONFIG_HAVE_WCSDUP */" >> $fn
-fi
-
 if [ "$have_vswscanf" = "1" ]; then
     echo "#define CONFIG_HAVE_VSWSCANF" >> $fn
 else

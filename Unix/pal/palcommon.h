@@ -721,16 +721,11 @@ PAL_INLINE char* SystemStrdup(
 PAL_INLINE wchar_t* SystemWcsdup(
     const wchar_t* str)
 {
-#  if defined(CONFIG_HAVE_WCSDUP)
-    extern wchar_t* wcsdup(const wchar_t* str);
-    return wcsdup(str);
-#  else
     size_t len = wcslen(str);
     wchar_t* ptr = (wchar_t*)malloc((len + 1) * sizeof(wchar_t));
     if(ptr)
         memcpy(ptr, str, (len + 1) * sizeof(wchar_t));
     return ptr;
-#  endif
 }
 
 PAL_END_EXTERNC
