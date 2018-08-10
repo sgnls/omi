@@ -269,44 +269,4 @@ void Sint64ToZStr(_Pre_writable_size_(64) TChar buf[64], PAL_Sint64 value, _Outp
     *result = p;
 }
 
-#if !defined(CONFIG_HAVE_WCSCASECMP)
-
-int wcsncasecmp(const wchar_t* s1, const wchar_t* s2, size_t n)
-{
-    wchar_t s1Char, s2Char;
-    const wchar_t *end = s1 + n - 1;
-    if(!s1 || !s2)
-        return -1;
-
-    while(s1 <= end)
-    {
-        s1Char = PAL_tolower(*s1);
-        s2Char = PAL_tolower(*s2);
-        if(s1Char != s2Char)
-            return (int)(s1Char - s2Char);
-        s1++;
-        s2++;
-    }
-    return 0;
-}
-
-int wcscasecmp(const wchar_t* s1, const wchar_t* s2)
-{
-    wchar_t s1Char, s2Char;
-    if(!s1 || !s2)
-        return -1;
-
-    while(*s1 && *s2)
-    {
-        s1Char = PAL_tolower(*s1);
-        s2Char = PAL_tolower(*s2);
-        if(s1Char != s2Char)
-            return (int)(s1Char - s2Char);
-        s1++;
-        s2++;
-    }
-
-    return (int)((unsigned int)*s1 - (unsigned int)*s2);    
-}
-#endif
 

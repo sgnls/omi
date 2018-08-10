@@ -1910,12 +1910,6 @@ else
     echo "/* #define CONFIG_HAVE_WCSDUP */" >> $fn
 fi
 
-if [ "$have_wcscasecmp" = "1" ]; then
-    echo "#define CONFIG_HAVE_WCSCASECMP" >> $fn
-else
-    echo "/* #define CONFIG_HAVE_WCSCASECMP */" >> $fn
-fi
-
 if [ "$have_vswscanf" = "1" ]; then
     echo "#define CONFIG_HAVE_VSWSCANF" >> $fn
 else
