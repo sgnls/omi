@@ -28,20 +28,20 @@
 
 #define TEST_ASSERT(x) NitsAssert(x, MI_T(""))
 
-#if (defined(sun) || defined(hpux) || defined(aix)) && defined(CONFIG_ENABLE_WCHAR)
+#if defined(sun) || defined(hpux) || defined(aix)
 
 // 
 // This failes due to difficulty supporting four byte character sets in codec/mof/parser/utility.c
 // An issue has been filed.
 //
-#define DISABLE_WCHAR_TESTS 1
+#define DISABLE_CHAR_TESTS 1
 #endif
 
 using namespace std;
 
 static void TestLexParser(LEX_TEST *test)
 {
-#if !DISABLE_WCHAR_TESTS
+#if !DISABLE_CHAR_TESTS
     MOF_Parser * parser = MI_MOFParser_Init((void*)test->buf, (MI_Uint32)test->size, NULL);
     MOF_State * state = (MOF_State*)parser->state;
     LEX_RESULT *r = test->expected;
